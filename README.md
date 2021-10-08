@@ -46,3 +46,15 @@ ganeti_vm_create:
   node: ivc-06
   os_type: image+centos-8
 ```
+
+Install the collection:
+
+```
+ansible-galaxy collection install rrey.ganeti
+```
+
+Call the playbook for the demo with your inventory:
+
+```
+ansible-playbook rrey.ganeti.create_or_destroy_vm -i ./inv.ini
+```

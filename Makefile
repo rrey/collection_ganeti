@@ -1,7 +1,8 @@
 
 clean:
 	rm rrey-ganeti-*.tar.gz
-build: clean
+
+build:
 	ansible-galaxy collection build
 
 publish: build

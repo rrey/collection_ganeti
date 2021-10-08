@@ -14,3 +14,35 @@ Click on the name of a plugin or module to view that content's documentation:
   - **roles**
     - fix_vm_setup (demo purpose only)
     - ganeti
+
+
+## Using this collection
+
+Create an inventory such as:
+
+```
+# inv.ini
+test-rre.psvm
+```
+
+and group_vars with following minimal information (example):
+
+```
+# group_vars/all
+---
+
+ganeti_address: ganeti_rapi_server_address
+ganeti_credentials:
+  user: some_user_on_ganeti
+  password: some_secret_password
+
+ganeti_vm_create:
+- name: test-rre.psvm
+  memory: 2048
+  vcpu: 2
+  disks:
+  - name: root
+    size: 20G
+  node: ivc-06
+  os_type: image+centos-8
+```

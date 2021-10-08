@@ -42,6 +42,4 @@
     label: "{{ item.name }}"
   register: destroyed
 
-- debug:
-    var: destroyed
 ...

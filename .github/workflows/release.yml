@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  sanity:
+  release:
     runs-on: ubuntu-latest
     steps:
 

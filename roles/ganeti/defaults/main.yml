@@ -1,0 +1,18 @@
+---
+
+ganeti_address: localhost
+ganeti_credentials:
+  user: "john"
+  password: "doe"
+
+ganeti_vm_create: []
+ganeti_vm_destroy: []
+
+ganeti_bridge_map:
+  rdvm: "vmbr86"
+  psvm: "vmbr221"
+  corp: "vmbr2"
+  integ: "vmbr21"
+  admin: "vmbr38"
+
+...

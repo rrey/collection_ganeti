@@ -1,0 +1,40 @@
+---
+
+- block:
+
+  - name: Check if server is already available
+    delegate_to: localhost
+    wait_for:
+      host: "{{ inventory_hostname }}"
+      port: 22
+      connect_timeout: 30
+
+  rescue:
+
+  - name: Waits server to be reachable on port 22
+    delegate_to: localhost
+    wait_for:
+      host: "{{ ansible_host }}"
+      port: 22
+      connect_timeout: 300
+  
+  - name: Ensure hostname is set
+    hostname:
+      name: "{{ inventory_hostname | regex_replace('.psvm', '') }}"
+      use: systemd
+    notify:
+    - Reboot the machine
+  
+  - name: Ensure address is correct
+    lineinfile:
+      path: /etc/sysconfig/network-scripts/ifcfg-ens5
+      search_string: 'IPADDR=192.168.221.10'
+      line: 'IPADDR=192.168.221.13'
+    notify:
+    - Reboot the machine
+  
+  - meta: flush_handlers
+  
+  - import_tasks: test.yml
+
+...

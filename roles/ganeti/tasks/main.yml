@@ -1,0 +1,47 @@
+---
+
+- name: Ensure instance exists
+  ganeti_instance:
+      user: "{{ ganeti_credentials.user }}"
+      password: "{{ ganeti_credentials.password }}"
+      address: "{{ ganeti_address }}"
+      name: "{{ item.name }}"
+      state: present
+      memory: "{{ item.memory }}"
+      vcpus: "{{ item.vcpu }}"
+      disk_template: plain
+      disks: "{{ item.disks }}"
+      nics:
+        - mode: bridged
+          link: "{{ ganeti_bridge_map[(item.name | split('.'))[-1]] }}"
+      os_type: "{{ item.os_type }}"
+      pnode: "{{ item.node }}"
+  register: c
+  loop: "{{ ganeti_vm_create }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Destroy listed instance
+  ganeti_instance:
+      user: "{{ ganeti_credentials.user }}"
+      password: "{{ ganeti_credentials.password }}"
+      address: "{{ ganeti_address }}"
+      name: "{{ item.name }}"
+      state: absent
+      memory: "{{ item.memory }}"
+      vcpus: "{{ item.vcpu }}"
+      disk_template: plain
+      disks: "{{ item.disks }}"
+      nics:
+        - mode: bridged
+          link: "{{ ganeti_bridge_map[(item.name | split('.'))[-1]] }}"
+      os_type: "{{ item.os_type }}"
+      pnode: "{{ item.node }}"
+  loop: "{{ ganeti_vm_destroy }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: destroyed
+
+- debug:
+    var: destroyed
+...

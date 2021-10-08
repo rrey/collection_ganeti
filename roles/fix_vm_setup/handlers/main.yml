@@ -1,0 +1,9 @@
+---
+
+- name: Reboot the machine
+  reboot:
+    reboot_timeout: 1
+  ignore_errors: true
+
+...
+

@@ -1,0 +1,10 @@
+---
+
+- name: Waits server to be reachable on port 22 on new address
+  delegate_to: localhost
+  wait_for:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    connect_timeout: 300
+
+...

@@ -1,0 +1,13 @@
+- hosts: localhost
+  gather_facts: false
+  roles:
+    - ganeti
+  tags:
+  - ganeti
+
+- hosts: test-rre.psvm
+  gather_facts: false
+  roles:
+    - fix_vm_setup 
+  tags:
+  - fixup

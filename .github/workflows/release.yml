@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v1
+        with:
+          path: ansible_collections/rrey/ganeti
+
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python_version }}
+
+      - name: Install ansible
+        run: pip install -r requirements.txt
+
+      - name: Build and publish collection
+        run: make publish
+        env:
+          GALAXY_TOKEN: ${{ secrets.GALAXY_TOKEN }}
